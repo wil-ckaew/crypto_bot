@@ -1,0 +1,35 @@
+# Base de imagem para Python
+FROM python:3.10-slim AS python-env
+
+# Definir o diretório de trabalho
+WORKDIR /app
+
+# Copiar o arquivo de dependências do Python
+COPY requirements.txt .
+
+# Instalar as dependências do Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Base de imagem para Rust
+FROM rust:latest AS rust-env
+
+# Definir o diretório de trabalho para Rust
+WORKDIR /app
+
+# Copiar o código do Rust
+COPY backend/ /app/backend/
+
+# Definir o diretório de trabalho para o Python
+WORKDIR /app/model/
+
+# Copiar o código do Python
+COPY model/ /app/model/
+
+# Compilar o código Rust
+RUN cargo build --release
+
+# Expor a porta que o backend vai usar (se necessário)
+EXPOSE 8080
+
+# Definir o comando para rodar o bot
+CMD ["cargo", "run", "--release"]

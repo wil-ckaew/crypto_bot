@@ -1,0 +1,7 @@
+python-binance==1.0.15  # Biblioteca para interagir com a API da Binance
+numpy==1.24.2          # Bibliotecas matemáticas
+pandas==1.5.3          # Para manipulação de dados
+scikit-learn==1.1.3    # Para modelos de aprendizado de máquina
+tensorflow==2.10.0     # Se você estiver usando TensorFlow
+joblib==1.2.0          # Para salvar e carregar modelos de aprendizado de máquina
+

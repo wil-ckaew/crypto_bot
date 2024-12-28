@@ -1,0 +1,5 @@
+api_key = "XKd44lVqNE58Y8T1CoeB4XNzkFWd1BULXjLnldam0Lxe9xqVv1alaL76LPkylXcE"
+api_secret = "KwWxm23vkq92XxtcstrnnieMo42ukqfRiapWkL5eXSiQSrpgeUNURsG6AMCnrMwh"
+symbol = "BTCUSDT"
+
+api_url = "https://api.example.com/price"
