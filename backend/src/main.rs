@@ -2,6 +2,7 @@
 use actix_web::{web, App, HttpServer, Responder, HttpResponse};
 use std::process::Command;
 use log::info;
+use actix_cors::Cors; // Adicionado para corrigir o erro
 use serde_json::json; // Importa a macro `json`
 
 mod bot;  // Agora o módulo bot está no arquivo src/bot.rs
@@ -31,7 +32,11 @@ pub async fn trade() -> impl Responder {
                         })),
                     }
                 }
-                msg if msg.starts_with("ERRO") => HttpResponse::BadRequest().json(json!({
+                msg if msg.contains("Saldo insuficiente") => HttpResponse::BadRequest().json(json!({
+                    "status": "error",
+                    "message": msg
+                })),
+                msg if msg.starts_with("Erro") => HttpResponse::BadRequest().json(json!({
                     "status": "error",
                     "message": msg
                 })),
@@ -63,6 +68,12 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
         App::new()
+            .wrap(
+                Cors::default()
+                    .allow_any_origin()
+                    .allow_any_method()
+                    .allow_any_header(), // Permite requisições de qualquer origem
+            )
             .route("/trade", web::get().to(trade)) // Define a rota para /trade
     })
     .bind("127.0.0.1:8080")?
